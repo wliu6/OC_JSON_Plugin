@@ -1,5 +1,5 @@
 # **OC_JSON_Plugin**
-###*blog:<http://blog.csdn.net/wliu6?viewmode=contents>*
+###*blog:<>*
 ***
 * [English Description](#English Description)
 * [中文说明](#中文说明)
