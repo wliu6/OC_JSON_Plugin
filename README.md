@@ -26,4 +26,4 @@ fat model 使用人群
 * 如果你没有男票而且想交男票请一定Issues我！！！
 
 ####特别感谢:
-* [ESJSONFormat](#https://github.com/EnjoySR/ESJsonFormat-Xcode) 因为之前用的很舒服，知道Xcode8之后不能用了之后让我萌生了写这个脚本的想法。
+* [ESJSONFormat](https://github.com/EnjoySR/ESJsonFormat-Xcode) 因为之前用的很舒服，知道Xcode8之后不能用了之后让我萌生了写这个脚本的想法。
