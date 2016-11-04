@@ -61,21 +61,22 @@ class JsonNode_InputBox(Frame):
 		self.config_exchange_info()
 		self.createWidgets()
 
-	def createWidgets(self):	
-		try:
-			self.od_tuple = self.ex_od.popitem(last=True)
-			self.label = Label(self, text=self.od_tuple[1])
-			self.label.pack()
-			self.textfield = Entry(self, width=36)
-			self.textfield.bind("<Enter>", self.self.click_entercommend)
-			self.textfield.pack()
-			self.enter_btn = Button(self, text = 'Enter', command=click_enterhandler)
-			self.enter_btn.pack()			
-		except Exception, e:
-			print 'ex_od is None'		
+	def createWidgets(self):
+		self.od_tuple = self.ex_od.popitem(last=True)
+		self.label = Label(self, text=self.od_tuple[1])
+		self.label.pack()
+		self.textfield = Entry(self, width=36)
+		# self.textfield.bind("<Enter>", self.self.click_entercommend)
+		self.textfield.pack()
+		self.enter_btn = Button(self, text = 'Enter', command=self.click_enterhandler)
+		self.enter_btn.pack()		
+		# try:
+					
+		# except Exception, e:
+		# 	print 'ex_od is None'		
 
-	def click_entercommend(self, event):
-		self.click_enterhandler()
+	# def click_entercommend(self, event):
+	# 	self.click_enterhandler()
 
 	def click_enterhandler(self):
 		save_key = self.od_tuple[0]
@@ -198,7 +199,7 @@ class JsonNode_InputBox(Frame):
 					header_str = ''
 					try:
 						header_str = os.path.split(filename)[-1].split('.')[0]+'.h'
-						self.savename = header_str
+						self.savename = os.path.split(filename)[-1].split('.')[0]
 					except Exception, e:
 						pass
 					prefix_str = '/*\n*\t版权声明adad。。。\n*/\n#import "%s"\n' % header_str 
@@ -208,7 +209,7 @@ class JsonNode_InputBox(Frame):
 				self.savepath = os.path.split(filename)[0]
 				
 	def showSuccess(self, msg):
-		tkMessageBox.showinfo('Alert!', msg+'文件名为' % self.savename)
+		tkMessageBox.showinfo('Alert!', msg+'文件名为'+self.savename)
 		os.system('open %s' % self.savepath)
 
 class Appliction(Frame):
