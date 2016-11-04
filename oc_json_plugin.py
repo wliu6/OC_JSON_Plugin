@@ -198,7 +198,7 @@ class JsonNode_InputBox(Frame):
 			if len(text) > 0:
 				f1 = open(filename, 'w')
 				if extension == '.h':
-					prefix_str = '/*\n*\t版权声明adad。。。\n*/\n%s\n' % '#import <Foundation/Foundation.h>' 
+					prefix_str = '/*!\n *\tproducted by oc_json_plugin.py\n *\tauth: w6\n*/\n%s\n' % '#import <Foundation/Foundation.h>' 
 				elif extension == '.m':
 					header_str = ''
 					try:
@@ -206,7 +206,7 @@ class JsonNode_InputBox(Frame):
 						self.savename = os.path.split(filename)[-1].split('.')[0]
 					except Exception, e:
 						pass
-					prefix_str = '/*\n*\t版权声明adad。。。\n*/\n#import "%s"\n' % header_str 
+					prefix_str = '/*!\n *\tproducted by oc_json_plugin.py\n *\tauth: w6\n */\n#import "%s"\n' % header_str 
 				f1.write(prefix_str+text)
 				f1.close()
 			if extension == '.m':
