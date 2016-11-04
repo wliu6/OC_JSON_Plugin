@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-	
+#  Created by ibireme on 13/3/30.
+#  Copyright (c) 2015 ibireme.
+#  This source code is licensed under the MIT-style license found in the
+#  LICENSE file in the root directory of this source tree.
+
 class oc_files_manager(object):
 	"""docstring for oc_files_manager"""
 	__slots__ = ('h_file_content', 'm_file_content')
