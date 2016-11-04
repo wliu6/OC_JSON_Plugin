@@ -70,17 +70,13 @@ class JsonNode_InputBox(Frame):
 		self.label = Label(self, text=self.od_tuple[1])
 		self.label.pack()
 		self.textfield = Entry(self, width=36)
-		# self.textfield.bind("<Enter>", self.self.click_entercommend)
+		self.textfield.bind("<Return>", self.click_entercommend)
 		self.textfield.pack()
 		self.enter_btn = Button(self, text = 'Enter', command=self.click_enterhandler)
-		self.enter_btn.pack()		
-		# try:
-					
-		# except Exception, e:
-		# 	print 'ex_od is None'		
+		self.enter_btn.pack()			
 
-	# def click_entercommend(self, event):
-	# 	self.click_enterhandler()
+	def click_entercommend(self, event):
+		self.click_enterhandler()
 
 	def click_enterhandler(self):
 		save_key = self.od_tuple[0]
