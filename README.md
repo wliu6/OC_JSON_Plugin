@@ -16,7 +16,7 @@ fat model 使用人群
 
 2.`python oc_json_plugin.py`
 
-3.
+![Screenshot](https://github.com/wliu6/OC_JSON_Plugin/blob/master/dome_sheet.gif)
 
 ####其他：
 
