@@ -13,7 +13,9 @@ fat model 使用人群
 
 ## 使用
 1.`cd 'oc_json_plugin.py文件所在路径'`
+
 2.`python oc_json_plugin.py`
+
 3.
 
 ####其他：
