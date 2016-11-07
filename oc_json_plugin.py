@@ -131,7 +131,7 @@ class JsonNode_InputBox(Frame):
 		for key, value in json_OrderedDict.iteritems():
 			if isinstance(value, dict):
 				name = self.get_propertyvalue(key)
-				
+
 				h_result_list.append('\n@property (nonnull, nonatomic, strong) %s *%s;// %s\n' % (name ,key, value))
 				m_result_list.append('\t\t\t_%s = [infoDic %sobjectForKey:@"%s"%s];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@{}' if ks_use else ''))
 
@@ -216,8 +216,12 @@ class JsonNode_InputBox(Frame):
 				self.savepath = os.path.split(filename)[0]
 				
 	def showSuccess(self, msg):
-		tkMessageBox.showinfo('Alert!', msg+'文件名为'+self.savename)
-		os.system('open %s' % self.savepath)
+		try:
+			tkMessageBox.showinfo('Alert!', msg+'文件名为'+self.savename)
+			os.system('open %s' % self.savepath)
+		except Exception, e:
+			print '你放弃了保存'
+		
 
 class Appliction(Frame):
 	"""docstring for Appliction"""
