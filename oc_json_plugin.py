@@ -8,8 +8,11 @@
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-ks", help="kszc use!", action='store_true')
+parser.add_argument("-d", help="Whether show the original data of JSON.", action='store_true')
 args = parser.parse_args()
 ks_use = args.ks
+wliu_desc = args.d
+print wliu_desc
 
 class oc_files_manager(object):
 	"""docstring for oc_files_manager"""
@@ -170,7 +173,7 @@ class JsonNode_InputBox(Frame):
 				h_result_list.append('\n@property (nonatomic, assign) NSInteger %s;// %d\n' % (key, value))
 				m_result_list.append('\t\t\t_%s = [[infoDic %sobjectForKey:@"%s"%s] integerValue];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@0' if ks_use else ''))
 			elif isinstance(value, float):
-				h_result_list.append('\n@property (nonatomic, assign) float %s; // %f\n' % (key, value))
+				h_result_list.append('\n@property (nonatomic, assign) float %s;// %f\n' % (key, value))
 				m_result_list.append('\t\t\t_%s = [[infoDic %sobjectForKey:@"%s"%s] floatValue];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@0' if ks_use else ''))
 
 		h_result_list.append('\n- (_Nonnull instancetype)initWith%sDic:(NSDictionary * _Nonnull)infoDic;\n\n@end\n' % model_name)
