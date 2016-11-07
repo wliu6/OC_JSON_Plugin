@@ -4,6 +4,13 @@
 #  This source code is licensed under the MIT-style license found in the
 #  LICENSE file in the root directory of this source tree.
 
+# Params
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("-ks", help="kszc use!", action='store_true')
+args = parser.parse_args()
+ks_use = args.ks
+
 class oc_files_manager(object):
 	"""docstring for oc_files_manager"""
 	__slots__ = ('h_file_content', 'm_file_content')
@@ -126,7 +133,7 @@ class JsonNode_InputBox(Frame):
 				name = self.get_propertyvalue(key)
 				
 				h_result_list.append('\n@property (nonnull, nonatomic, strong) %s *%s;// %s\n' % (name ,key, value))
-				m_result_list.append('\t\t\t_%s = [infoDic objectForKey:@"%s"];\n' % (key, key))
+				m_result_list.append('\t\t\t_%s = [infoDic %sobjectForKey:@"%s"%s];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@{}' if ks_use else ''))
 
 				model_list_manager = self.get_oderedlist_ocfiles_manager(value, name)
 				h_result_list.insert(0, model_list_manager.h_file_content)
@@ -138,7 +145,7 @@ class JsonNode_InputBox(Frame):
 						name = self.get_propertyvalue(key)
 
 						h_result_list.append('\n@property (nonnull, nonatomic, strong) NSArray<%s *> *%s;// %s\n' % (name ,key, value))
-						forin_str = 'NSMutableArray *resultArr = [@[] mutableCopy];\n\t\t\tNSArray *targetArr = [infoDic objectForKey:@"%s"];\n\t\t\tfor (NSDictionary *dic in targetArr) {\n\t\t\t\t%s *obj = [[%s alloc] initWith%sDic:dic];\n\t\t\t\t[resultArr addObject:obj];\n\t\t\t}' % (key, name, name, name)
+						forin_str = 'NSMutableArray *resultArr = [@[] mutableCopy];\n\t\t\tNSArray *targetArr = [infoDic %sobjectForKey:@"%s"%s];\n\t\t\tfor (NSDictionary *dic in targetArr) {\n\t\t\t\t%s *obj = [[%s alloc] initWith%sDic:dic];\n\t\t\t\t[resultArr addObject:obj];\n\t\t\t}' % ('ks_' if ks_use else '', key, ' replace:@[]' if ks_use else '', name, name, name)
 						m_result_list.append('\n\t\t\t%s\n\t\t\t_%s = %s;\n' % (forin_str, key, '[resultArr copy]'))
 
 						model_list_manager = self.get_oderedlist_ocfiles_manager(target_obj, name)
@@ -153,13 +160,13 @@ class JsonNode_InputBox(Frame):
 
 			elif isinstance(value, basestring):
 				h_result_list.append('\n@property (nonnull, nonatomic, copy) NSString *%s;// %s\n' % (key, value))
-				m_result_list.append('\t\t\t_%s = [infoDic objectForKey:@"%s"];\n' % (key, key))
+				m_result_list.append('\t\t\t_%s = [infoDic %sobjectForKey:@"%s"%s];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@""' if ks_use else ''))
 			elif isinstance(value, (int, long)):
 				h_result_list.append('\n@property (nonatomic, assign) NSInteger %s;// %d\n' % (key, value))
-				m_result_list.append('\t\t\t_%s = [[infoDic objectForKey:@"%s"] integerValue];\n' % (key, key))
+				m_result_list.append('\t\t\t_%s = [[infoDic %sobjectForKey:@"%s"%s] integerValue];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@0' if ks_use else ''))
 			elif isinstance(value, float):
 				h_result_list.append('\n@property (nonatomic, assign) float %s; // %f\n' % (key, value))
-				m_result_list.append('\t\t\t_%s = [[infoDic objectForKey:@"%s"] floatValue];\n' % (key, key))
+				m_result_list.append('\t\t\t_%s = [[infoDic %sobjectForKey:@"%s"%s] floatValue];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@0' if ks_use else ''))
 
 		h_result_list.append('\n- (_Nonnull instancetype)initWith%sDic:(NSDictionary * _Nonnull)infoDic;\n\n@end\n' % model_name)
 		m_result_list.append(('\n\t\t}\n\t}\n\treturn self;\n} \n\n@end\n\n\n'))
