@@ -102,19 +102,24 @@ class JsonNode_InputBox(Frame):
 			self.quit()
 
 	def config_exchange_info(self):
-		self.ex_od = self.get_exchange_od(self.json_od)
+		self.ex_od = OrderedDict(self.get_exchange_list(self.json_od))
 		self.ex_od[base_model_str] = 'base model name'
 
-	def get_exchange_od(self, json_OrderedDict):
-		result_list = [] 
+	def get_exchange_list(self, json_OrderedDict):
+		result_list = []
 		for key, value in json_OrderedDict.iteritems():
 			if isinstance(value, dict):
 				title_tmp = '%s字段对应Class Name' % key
 				result_list.append((key, title_tmp))
+				list_tmp = result_list
+				result_list = self.get_exchange_list(value) + list_tmp
 			elif isinstance(value, list):
 				title_tmp = '%s字段对应数组的Member的Class Name' % key
 				result_list.append((key, title_tmp))
-		return OrderedDict(result_list)
+				if len(value) > 0:
+					list_tmp = result_list
+					result_list = self.get_exchange_list(value[0]) + list_tmp
+		return result_list
 
 	def get_propertyvalue(self, key):
 		name = key
