@@ -12,7 +12,6 @@ parser.add_argument("-d", help="Whether show the original data of JSON.", action
 args = parser.parse_args()
 ks_use = args.ks
 wliu_desc = args.d
-print wliu_desc
 
 class oc_files_manager(object):
 	"""docstring for oc_files_manager"""
@@ -140,7 +139,7 @@ class JsonNode_InputBox(Frame):
 			if isinstance(value, dict):
 				name = self.get_propertyvalue(key)
 
-				h_result_list.append('\n@property (nonnull, nonatomic, strong) %s *%s;// %s\n' % (name ,key, value))
+				h_result_list.append('\n@property (nonnull, nonatomic, strong) %s *%s;%s\n' % (name ,key, '// %s' % value if wliu_desc else ''))
 				m_result_list.append('\t\t\t_%s = [infoDic %sobjectForKey:@"%s"%s];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@{}' if ks_use else ''))
 
 				model_list_manager = self.get_oderedlist_ocfiles_manager(value, name)
@@ -152,7 +151,7 @@ class JsonNode_InputBox(Frame):
 					if isinstance(target_obj, dict):
 						name = self.get_propertyvalue(key)
 
-						h_result_list.append('\n@property (nonnull, nonatomic, strong) NSArray<%s *> *%s;// %s\n' % (name ,key, value))
+						h_result_list.append('\n@property (nonnull, nonatomic, strong) NSArray<%s *> *%s;%s\n' % (name ,key, '// %s' % value if wliu_desc else ''))
 						forin_str = 'NSMutableArray *resultArr = [@[] mutableCopy];\n\t\t\tNSArray *targetArr = [infoDic %sobjectForKey:@"%s"%s];\n\t\t\tfor (NSDictionary *dic in targetArr) {\n\t\t\t\t%s *obj = [[%s alloc] initWith%sDic:dic];\n\t\t\t\t[resultArr addObject:obj];\n\t\t\t}' % ('ks_' if ks_use else '', key, ' replace:@[]' if ks_use else '', name, name, name)
 						m_result_list.append('\n\t\t\t%s\n\t\t\t_%s = %s;\n' % (forin_str, key, '[resultArr copy]'))
 
@@ -167,13 +166,13 @@ class JsonNode_InputBox(Frame):
 						print 'float arr'
 
 			elif isinstance(value, basestring):
-				h_result_list.append('\n@property (nonnull, nonatomic, copy) NSString *%s;// %s\n' % (key, value))
+				h_result_list.append('\n@property (nonnull, nonatomic, copy) NSString *%s;%s\n' % (key, '// %s' % value if wliu_desc else ''))
 				m_result_list.append('\t\t\t_%s = [infoDic %sobjectForKey:@"%s"%s];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@""' if ks_use else ''))
 			elif isinstance(value, (int, long)):
-				h_result_list.append('\n@property (nonatomic, assign) NSInteger %s;// %d\n' % (key, value))
+				h_result_list.append('\n@property (nonatomic, assign) NSInteger %s;%s\n' % (key, '// %d' % value if wliu_desc else ''))
 				m_result_list.append('\t\t\t_%s = [[infoDic %sobjectForKey:@"%s"%s] integerValue];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@0' if ks_use else ''))
 			elif isinstance(value, float):
-				h_result_list.append('\n@property (nonatomic, assign) float %s;// %f\n' % (key, value))
+				h_result_list.append('\n@property (nonatomic, assign) float %s;%s\n' % (key, '// %f' % value if wliu_desc else ''))
 				m_result_list.append('\t\t\t_%s = [[infoDic %sobjectForKey:@"%s"%s] floatValue];\n' % (key, 'ks_' if ks_use else '', key, ' replace:@0' if ks_use else ''))
 
 		h_result_list.append('\n- (_Nonnull instancetype)initWith%sDic:(NSDictionary * _Nonnull)infoDic;\n\n@end\n' % model_name)
