@@ -1,1 +1,7 @@
 *.py linguist-language=Scala
+*.md linguist-language=Scala
+
+
+
+
+
