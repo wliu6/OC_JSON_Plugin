@@ -1,6 +1,5 @@
-*.py linguist-language=Scala
-*.md linguist-language=Scala
-
+*.py linguist-language=Objective-C
+*.md linguist-language=Objective-C
 
 
 
